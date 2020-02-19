@@ -1,0 +1,2 @@
+﻿Main.obj : error LNK2005: _main 已经在 Banker_Algorithm.obj 中定义
+F:\VS\MyProject\Debug\Banker_Algorithm.exe : fatal error LNK1169: 找到一个或多个多重定义的符号

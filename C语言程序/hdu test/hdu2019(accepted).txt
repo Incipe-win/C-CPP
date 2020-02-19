@@ -1,0 +1,37 @@
+#include<stdio.h>
+
+int main()
+{
+    int n,m,j;
+    while(scanf("%d%d",&n,&m)!=EOF&&n<=100)
+    {
+        getchar();
+        if(m==0&&n==0)
+            break;
+        int s[n];
+        for(int i=0; i<n; i++)
+        {
+            scanf("%d",&s[i]);
+        }
+        for(int i=0; i<n; i++)
+        {
+            if(m>=s[i]&&m<=s[i+1])
+            {
+                j=i;
+                for(int i=0; i<=j; i++)
+                    printf("%d ",s[i]);
+                printf("%d ",m);
+                for(int i=j+1; i<n; i++)
+                {
+                    if(i==n-1)
+                        printf("%d",s[i]);
+                    else
+                        printf("%d ",s[i]);
+                }
+                break;
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}

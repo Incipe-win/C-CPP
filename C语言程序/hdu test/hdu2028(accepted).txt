@@ -1,0 +1,27 @@
+/*hdu20288*/ 
+
+#include<stdio.h>
+
+int gcd(int a,int b);
+int lcm(int a,int b);//函数声明，C99必要的 
+
+int main(){
+	int n,num,s;
+	while(scanf("%d",&n)!=EOF){
+		s=1;
+		for(int i=0;i<n;i++){
+			scanf("%d",&num);
+			s=lcm(num,s);//调用函数 
+		}
+		printf("%d\n",s);
+	}
+	return 0;
+}
+
+int gcd(int a,int b){
+	return b?gcd(b,a%b):a;//gcd函数求最大公因数 
+}
+
+int lcm(int a,int b){
+	return a/gcd(a,b)*b;//lcm函数求最小公倍数 
+}

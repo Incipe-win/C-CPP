@@ -1,0 +1,69 @@
+string Multiply(string s,long x)  //大数乘以整形数
+{
+    reverse(s.begin(),s.end());
+    long cmp=0;
+    for(int i=0; i<s.size(); i++)
+    {
+        cmp=(s[i]-'0')*x+cmp;
+        s[i]=(cmp%10+'0');
+        cmp/=10;
+    }
+    while(cmp)
+    {
+        s+=(cmp%10+'0');
+        cmp/=10;
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}
+string Remove_later(string s)   //删除一个字符串的后倒0
+{
+    int ok=1;
+    for(int i=s.size()-1; i>=0; i--)
+    {
+        if(s[i]=='0'){
+            s.erase(i);
+        }
+        else if(s[i]=='.')
+        {
+            s.erase(i);
+            ok=0;
+        }
+        else
+            ok=0;
+        if(ok==0)
+            break;
+    }
+    return s;
+}
+string factorial(string s,int n)   //浮点数的n次方
+{
+    if(n==0)
+        return "1";
+    string cmp="",count="";
+    long x=0,point=0;
+    for(int i=0; i<s.size(); i++)
+        if(s[i]!='.')
+        {
+            cmp+=s[i];
+            x=x*10+(s[i]-'0');
+        }
+        else
+            point=s.size()-1-i;
+    for(int i=1; i<n; i++)
+    {
+        cmp=Multiply(cmp,x);
+    }
+    int ans_point=cmp.size()-n*point;
+    if(ans_point<0)
+    {
+        count+='.';
+        for(int i=ans_point; i!=0; i++)
+            count+='0';
+    }
+    string::iterator it=cmp.begin();
+    if(ans_point>=0&&ans_point<cmp.size())
+        cmp.insert(it+ans_point,'.');
+    count+=(Remove_later(cmp));
+    return count;
+}

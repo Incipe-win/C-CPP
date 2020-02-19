@@ -1,0 +1,18 @@
+string Multiply(string s,int x)  //大数乘以整形数
+{
+    reverse(s.begin(),s.end());
+    int cmp=0;
+    for(int i=0;i<s.size();i++)
+    {
+        cmp=(s[i]-'0')*x+cmp;
+        s[i]=(cmp%10+'0');
+        cmp/=10;
+    }
+    while(cmp)
+    {
+        s+=(cmp%10+'0');
+        cmp/=10;
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}

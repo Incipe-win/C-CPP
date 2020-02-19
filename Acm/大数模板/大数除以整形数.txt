@@ -1,0 +1,20 @@
+string Except(string s,int x)  //大数除以整形数
+{
+    int cmp=0,ok=0;
+    string ans="";
+    for(int i=0;i<s.size();i++)
+    {
+        cmp=(cmp*10+s[i]-'0');
+        if(cmp>=x)
+        {
+            ok=1;
+            ans+=(cmp/x+'0');
+            cmp%=x;
+        }
+        else{
+            if(ok==1)
+                ans+='0';  //注意这里啊。才找出错误
+        }
+    }
+    return ans;
+}

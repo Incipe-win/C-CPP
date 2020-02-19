@@ -1,0 +1,5 @@
+﻿  Crawler.cpp
+F:\VS\Crawler\Crawler.cpp(42,16): warning C4129: “.”: 不可识别的字符转义序列
+F:\VS\Crawler\Crawler.cpp(56,16): warning C4129: “s”: 不可识别的字符转义序列
+F:\VS\Crawler\Crawler.cpp(116,20): warning C4018: “<”: 有符号/无符号不匹配
+  Crawler.vcxproj -> F:\VS\Crawler\Debug\Crawler.exe

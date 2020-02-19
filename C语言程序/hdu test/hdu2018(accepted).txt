@@ -1,0 +1,26 @@
+#include<stdio.h>
+int fun(int n);
+
+int main()
+{
+    int n,sum;
+    while(scanf("%d",&n)!=EOF&&n>0&&n<55)
+    {
+        if(n==0)
+            break;
+        sum=fun(n);
+        printf("%d\n",sum);
+    }
+    return 0;
+}
+
+int fun(int n)//recursive call
+{
+    if(n<=4)
+        return n;
+    else
+        return fun(n-1)+fun(n-3);
+}
+/** summarize:If you see a programming problem about animal reproduction, 
+you must think of Fibonacci sequence and recursion!It's very important!
+ */     

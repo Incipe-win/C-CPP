@@ -1,0 +1,38 @@
+/*hdu2027*/
+
+#include<stdio.h>
+
+int main() {
+	int n,i,j,k,l,m;
+	i=j=k=l=m=0;
+	char ch;
+	scanf("%d",&n);
+	getchar();//抵消空格的影响 
+	while(n--) {
+		for(; (ch=getchar())!=EOF;) {
+			if(ch=='\n') {
+				printf("a:%d\ne:%d\ni:%d\no:%d\nu:%d\n",i,j,k,l,m);
+				if(n)printf("\n");
+				i=j=k=l=m=0;
+				break;
+			} else if(ch=='a') {
+				i++;
+				continue;
+			} else if(ch=='e') {
+				j++;
+				continue;
+			} else if(ch=='i') {
+				k++;
+				continue;
+			} else if(ch=='o') {
+				l++;
+				continue;
+			}
+			if(ch=='u') {
+				m++;
+				continue;
+			}
+		}
+	}
+	return 0;
+}

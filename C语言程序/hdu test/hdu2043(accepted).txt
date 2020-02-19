@@ -1,0 +1,44 @@
+/*hdu2043*/
+
+#include<stdio.h>
+#include<string.h>
+
+#define N 52
+
+int main()
+{
+    int m,length,a,b,c,d,count;
+    char ch[N];
+    scanf("%d",&m);
+    getchar();
+    while(m--)
+    {
+        a=b=c=d=0;
+        scanf("%s",ch);
+        length=strlen(ch);
+        /*if(length<8||length>16)
+            printf("NO\n");*/
+        if(length>=8&&length<=16)
+        {
+            for(int i=0; i<length; i++)
+            {
+                if(ch[i]>='a'&&ch[i]<='z')
+                    a=1;
+                if(ch[i]>='A'&&ch[i]<='Z')
+                    b=1;
+                if(ch[i]>='0'&&ch[i]<='9')
+                    c=1;
+                if(ch[i] =='~'||ch[i]=='!'||ch[i]=='@'||ch[i]=='#'||ch[i]=='$'||ch[i]=='%'||ch[i]=='^')
+                    d=1;
+                count=a+b+c+d;
+                if(count>=3)break;
+            }
+        }
+        if(count>=3)
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+    return 0;
+}
+
