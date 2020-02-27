@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Aircraft_Battle.iml" filepath="$PROJECT_DIR$/.idea/Aircraft_Battle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../PythonStart/.idea/PythonStart.iml" filepath="$PROJECT_DIR$/../../../PythonStart/.idea/PythonStart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Web_Program/.idea/Web_Program.iml" filepath="$PROJECT_DIR$/../Web_Program/.idea/Web_Program.iml" />
+    </modules>
+  </component>
+</project>
