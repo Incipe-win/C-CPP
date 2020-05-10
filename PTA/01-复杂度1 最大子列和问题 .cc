@@ -42,12 +42,14 @@ int MaxSubsequence(int s[], int K) {
   int Max = 0, tmp = 0;
   for (int i = 0; i < K; i++) {
     tmp += s[i];
-    if (tmp < 0)
+    if (tmp > Max) { 
+        Max = tmp;
+    }
+    if (tmp < 0) {
       tmp = 0;
-    else if (tmp > Max)
-      Max = tmp;
+    }
   }
-  return Max;
+  return Max > 0 ? Max : 0;
 }
 
 int main() {
