@@ -9,7 +9,7 @@ obj = $(patsubst %.cc, %, $(src))
 all : $(obj)
 
 % : %.cc
-	gcc -o $@ $^ -g
+	gcc -o $@ $^ -g -Wall
 
 clean:
 	rm -rf $(obj)
