@@ -6,7 +6,9 @@
 #include <unistd.h>
 
 int main() {
-  int i;
-
+  // execlp("ls", "ls", "-lrt", NULL);
+  // 没有返回值
+  execl("/bin/ls", "ls", "-lrt", NULL);
+  perror("error fault");
   return 0;
 }
