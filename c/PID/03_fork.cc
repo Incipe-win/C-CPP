@@ -6,26 +6,21 @@
 #include <unistd.h>
 
 int main() {
-  printf("Begin...\n");
   pid_t pid = fork();
   if (pid < 0) {
     perror("fork error");
     exit(1);
   } else if (pid == 0) {
     // 子进程
-    printf("I am a child fork, pid = %d, ppid = %d\n", getpid(), getppid());
+    printf("我是子进程, 进程id = %d, 父进程id = %d\n", getpid(), getppid());
     while (1) {
-      printf("I am a child fork\n");
+      printf("我是子进程..., pid = %d, ppid = %d\n", getpid(), getppid());
       sleep(1);
     }
   } else {
     // 父进程
-    printf("childpid = %d, self = %d, ppid = %d\n", pid, getpid(), getppid());
-    while (1) {
-      sleep(1);
-    }
+    printf("子进程id = %d, 进程id = %d, 父进程id = %d\n", pid, getpid(),
+           getppid());
   }
-  printf("End...\n");
-
   return 0;
 }

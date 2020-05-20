@@ -17,9 +17,11 @@ int main() {
       exit(1);
     }
     if (pid == 0) {
+      printf("I am child process, pid = %d, ppid = %d\n", getpid(), getppid());
       break;
     }
   }
+  sleep(i);
   if (i == 5) {
     printf("I am parent process, pid = %d\n", getpid());
     while (1) {
@@ -30,12 +32,10 @@ int main() {
         printf("wpid = %d\n", wpid);
       }
     }
+    // 防止产生孤儿进程
     while (1) {
       sleep(1);
     }
   }
-  if (i < 5) {
-    sleep(i);
-    printf("I am child process, pid = %d, ppid = %d\n", getpid(), getppid());
-  }
+  return 0;
 }
