@@ -32,6 +32,7 @@ void stop_music() { system("killall -STOP madplay &"); }
 
 void next_music() {
   system("killall -9 madplay");
+
   if (order == 6) {
     order = -1;
   }
