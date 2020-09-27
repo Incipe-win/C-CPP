@@ -1,0 +1,72 @@
+1.文件IO接口函数
+	文件IO: File Input Output
+			文件的输入输出操作
+			==> 文件读写操作
+
+		读写文件 和 把大象装冰箱 步骤是一样的!!
+		
+	打开 open:
+		NAME
+	       open - open and possibly create a file
+
+		SYNOPSIS
+		       #include <sys/types.h>
+		       #include <sys/stat.h>
+		       #include <fcntl.h>
+					open用来打开或创建一个文件
+		       int open(const char *pathname, int flags);
+					@pathname: 带路径的文件名,比如 当前目录(./)下的 1.txt
+							"./1.txt"
+					@flags: 标志位,表示打开文件的方式
+						O_RDONLY  只读打开,被打开的文件只能用来读取
+						O_WRONLY  只写打开,被打开的文件只能用来写入
+						O_RDWR	  读写打开,  万金油!!
+				返回值:
+					成功,返回最小可用文件描述符 
+						==> 此时,该返回值就表示了这个被打开的文件
+							后续读写操作,都是根据这个返回值(文件描述符)来
+					失败,返回 -1,并且可以用perror函数打印错误信息
+
+		===> 经常,要打开当前目录下的 1.txt,并且可读可写
+			int  fd = 0;
+			fd = open("./1.txt",O_RDWR);
+			if(-1 == fd)
+			{
+				perror("open file error");
+				return -1;
+			}
+			
+			
+	读 read:
+		NAME
+	       read - read from a file descriptor
+
+		SYNOPSIS
+	       #include <unistd.h>
+					read用来从指定的文件描述符中,读取文件内容
+	       ssize_t read(int fd, void *buf, size_t count);
+	       		@fd: 文件描述符,此处表示 从哪个文件中读取
+	       		@buf: 指向一块缓冲区,用来保存读取到的数据
+	       		@count:指定读取的字节数,表示要读多少
+	       				★★★注意: count 不能超过buf指定的缓冲区大小
+	       	返回值:
+	       		成功,返回实际读取到的字节数
+	       			==> 0 表示没有读取到任何数据
+	       		失败,返回 -1,并且errno被设置
+
+	写 write:
+
+	关闭 close:
+		NAME
+	       close - close a file descriptor
+
+		SYNOPSIS
+	       #include <unistd.h>
+				close 用来关闭一个文件描述符
+	       int close(int fd);
+				@fd: 文件描述符,open的返回值
+					表示要关闭的那个文件
+			
+		
+
+			
