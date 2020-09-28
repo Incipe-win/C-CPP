@@ -11,6 +11,9 @@
 int ts = 0;
 extern bool flag;
 
+/**
+ *  获取触摸的x，y坐标
+ * */
 void get_touch(int *x, int *y) {
   int ret;
   struct input_event ev;  //输入事件结构体变量,用来保存读取的输入事件
@@ -30,10 +33,10 @@ void get_touch(int *x, int *y) {
     ret = read(ts, &ev, sizeof(ev));  //读取输入事件保存到结构体ev中
     if (ret == sizeof(ev)) {
       if (ev.type == EV_ABS && ev.code == ABS_X) {
-        *x = ev.value;  //此时的value是触摸点X轴的坐标
+        *x = ev.value * 0.8;  //此时的value是触摸点X轴的坐标
       }
       if (ev.type == EV_ABS && ev.code == ABS_Y) {
-        *y = ev.value;  //此时的value是触摸点Y轴的坐标
+        *y = ev.value * 0.8;  //此时的value是触摸点Y轴的坐标
       }
       if (ev.type == EV_KEY && ev.code == BTN_TOUCH && ev.value == 0) {
         //手指从触摸屏 离开
@@ -44,4 +47,7 @@ void get_touch(int *x, int *y) {
   }
 }
 
+/**
+ *  关闭触屏板
+ * */
 void close_ts() { close(ts); }

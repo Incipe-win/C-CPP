@@ -16,11 +16,17 @@ int order = 0;
 
 extern bool isFirst;
 extern bool isPlay;
+extern int vol;
 
+/**
+ *  播放音乐
+ *  如果是第一次播放就开始播放
+ *  如果不是，就继续播放
+ * */
 void play_music() {
   if (isFirst) {
     char command[100] = {0};
-    sprintf(command, "madplay %s &", music[order]);
+    sprintf(command, "madplay %s -a %d &", music[order], vol);
     printf("%s\n", command);
     system(command);
   } else {
@@ -28,8 +34,14 @@ void play_music() {
   }
 }
 
+/**
+ *  暂停音乐
+ * */
 void stop_music() { system("killall -STOP madplay &"); }
 
+/**
+ *  下一首
+ * */
 void next_music() {
   system("killall -9 madplay");
 
@@ -37,18 +49,21 @@ void next_music() {
     order = -1;
   }
   char command[100] = {0};
-  sprintf(command, "madplay %s &", music[++order]);
+  sprintf(command, "madplay %s -a %d &", music[++order], vol);
   printf("%s\n", command);
   system(command);
 }
 
+/**
+ *  上一首
+ * */
 void pre_music() {
   system("killall -9 madplay");
   if (order == 0) {
     order = 7;
   }
   char command[100] = {0};
-  sprintf(command, "madplay %s &", music[--order]);
+  sprintf(command, "madplay %s -a %d &", music[--order], vol);
   printf("%s\n", command);
   system(command);
 }
