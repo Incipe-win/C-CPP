@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<math.h>
+
+int IsPrime1(int n);
+int IsPrime2(int m);
+int IsPrime1(int n)
+{
+    int k=sqrt(n);
+    for(int j=2; j<=k; j++)
+    {
+        if(n%j==0)
+            return 0;
+    }
+    return 1;
+
+}
+int IsPrime2(int m)
+{
+    int k=sqrt(m);
+    for(int i=2; i<=k; i++)
+    {
+        if(m%i==0)
+            return 0;
+    }
+    return 1;
+}
+
+int main()
+{
+    int num;
+    while(~scanf("%d",&num))
+    {
+        if(num==0)
+            break;
+        int count=0;
+        for(int i=2; i<num/2; i++)
+        {
+            if(i%2==0)
+                continue;
+            for(int j=num/2+1; j<num-1; j++)
+            {
+                    if(i+j==num)
+                    {
+                        if(j%2==0)
+                         break;
+                        int n=i,m=j;
+                        n=IsPrime1(n);
+                        m=IsPrime2(m);
+                        if(n&&m)
+                        {
+                            count++;
+                            continue;
+                        }
+                    }
+            }
+        }
+        printf("%d\n",count);
+    }
+    return 0;
+}

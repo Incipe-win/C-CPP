@@ -1,0 +1,179 @@
+1.LCD屏
+	Everyting is file,in linux/unix
+		===>一切皆文件!!!
+★
+	LCD屏  ==>  设备文件  ==>  /dev/fb0
+		===> frame buffer 帧缓冲设备
+
+	什么是LCD屏呢??
+		由 宽w个像素点,高h个像素点组成的像素点矩阵
+
+	什么是像素点?
+		像素点 是电子屏幕中,用来显示的基本单元
+		一个像素点由3个(色)LED灯组成 ==>  RGB 
+
+	在计算机中,颜色确实是由一个整数来表示
+	比如:
+			24位色:  8bits-->R 红   bit:16~23
+					 8bits-->G 绿	 bit:8~15
+ 					 8bits-->B 蓝 	 bit:0~7
+
+					====>  	
+						0x000000  ~  0xffffff
+
+	在LCD屏上,一个像素点就可以显示一个颜色值
+		整个LCD屏可以显示 w*h个颜色
+
+	不同的像素点 按某种规律 显示特定的颜色 ==>画/字
+
+
+2.在ARM板上,用程序控制LCD屏显示
+	GEC6818的LCD屏  32位屏(ARGB 透明度/红色/绿色/蓝色)
+							W=800
+							H=480
+
+  步骤:
+  		1) 打开LCD屏设备文件
+
+  		2) 将LCD屏映射到内存 --> 为了加快响应速度
+
+  		3) 操作LCD屏显示 ==> 颜色/图片/文字/...
+
+  		4) 解除映射
+
+  		5) 关闭文件
+
+
+======初级参考:不映射,直接通过写入颜色来实现显示=================
+	void lcd_write(void) //让屏幕变成了红色
+	{
+		int fd;
+		int ret;
+		int i=0;
+		unsigned int color = 0x00ff0000; //红色 
+		fd = open("/dev/fb0",O_RDWR);
+
+		for(i=0;i<800*480;i++)
+		{
+			write(fd,&color,4);//写入一个像素点的颜色值
+		}
+
+		close(fd);
+	}
+
+
+==========通过映射实现LCD屏显示===================
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <fcntl.h>
+	#include <unistd.h>
+	#include <sys/mman.h>
+
+	int lcd_fd;
+	unsigned int *plcd;
+	/*
+		lcd_init: 用来初始化LCD屏(打开并映射)
+	*/
+	void lcd_init(void)
+	{
+		//1)打开屏幕文件
+		lcd_fd = open("/dev/fb0",O_RDWR);
+		if(-1 == lcd_fd)
+		{
+			perror("open lcd error");
+			return;
+		}
+
+		//2)映射
+		plcd = mmap(NULL, //指定映射空间首地址,NULL表示系统自己选
+					800*480*(32/8),//映射空间大小,要映射的是屏幕
+					PROT_READ|PROT_WRITE,//映射空间的权限,与打开文件相同
+					MAP_SHARED,	//映射方式,共享映射,修改映射空间的内容会被同步到文件
+					lcd_fd,//文件描述符,指定要映射的文件
+					0 //映射文件偏移量,映射是从文件的哪个地方开始映射
+					);
+		if(MAP_FAILED == plcd)
+		{
+			perror("mmap error");
+			return;
+		}
+	}
+
+	/*
+		lcd_uninit:用来解除屏幕(解除映射并关闭)	
+	*/
+	void lcd_uninit(void)
+	{
+		munmap(plcd,800*480*32/8);
+		close(lcd_fd);
+	}
+
+	/*
+		lcd_drawpoint: 画点函数,将LCD屏上指定的像素点显示为对应颜色
+			@w: 要显示的像素点宽轴位置 (0~799)
+			@h: 要显示的像素点高轴位置 (0~479)
+			@color: 要显示的颜色  (0x000000~0xffffff)
+
+		===>	
+			plcd + w + h*800: 像素点的地址
+			*(plcd + w + h*800): 该像素点的值
+	*/
+	void lcd_drawpoint(int w,int h,unsigned int color)
+	{
+		*(plcd + w + h*800) = color; //(w,h)显示了color色
+	}
+
+
+
+	===> 测试:
+		int main(void)
+		{
+			int x,y;
+		
+			lcd_init();
+
+			for(y=0;y<480;y++)
+			{
+				for(x=0;x<800;x++)
+				{
+					lcd_drawpoint(x,y,0x00ff00);
+				}
+			}
+
+			lcd_uninit();
+		}
+
+
+==> 测试LCD功能模块的功能函数是否正确
+		1) 在屏幕上,画个标准圆
+			圆点: (a,b)
+			半径: 200
+		  数学公式:
+			(x-a)^2 + (y-b)^2 <= 200^2
+
+		
+
+
+
+
+
+
+
+
+
+
+
+							
+
+
+
+
+		
+
+
+
+
+
+
+	
+	

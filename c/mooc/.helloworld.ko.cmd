@@ -1,1 +1,0 @@
-cmd_/home/incipe/Documents/cpp/c/mooc/helloworld.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o /home/incipe/Documents/cpp/c/mooc/helloworld.ko /home/incipe/Documents/cpp/c/mooc/helloworld.o /home/incipe/Documents/cpp/c/mooc/helloworld.mod.o;  true

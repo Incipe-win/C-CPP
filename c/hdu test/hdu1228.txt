@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<string.h>
+
+char str[10][10]= {"zero","one","two","three","four","five","six","seven","eight","nine"};
+int change(char *ch);
+int change(char *ch)
+{
+    for(int i=0; i<10; i++)
+        if(strcmp(str[i],ch)==0)
+            return i;
+     return 0;
+}
+int main()
+{
+    char ch[100017];
+    while(gets(ch)!='\0')
+    {
+        int count,i=0,a=0,b=0;
+        while(ch[i]!='+')
+        {
+            count=0;
+            for(; ch[i]!=' '; i++)
+                ch[count++]=ch[i];
+            ch[count]='\0';
+            a=a*10+change(ch);
+            i++;
+        }
+        i+=2;
+        while(ch[i]!='=')
+        {
+            count=0;
+            for(; ch[i]!=' '; i++)
+                ch[count++]=ch[i];
+            ch[count]='\0';
+            b=b*10+change(ch);
+            i++;
+        }
+        if(a==0&&b==0)
+            break;
+        else
+            printf("%d\n",a+b);
+    }
+    return 0;
+}

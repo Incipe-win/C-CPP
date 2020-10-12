@@ -1,0 +1,117 @@
+1.触摸屏
+	触摸屏  ==>  /dev/input/event0
+
+	在linux所有的输入事件,都有一个结构体(struct input_event)来维护
+
+	====> 该结构体定义在头文件  linux/input.h
+		结构体原型如下
+		struct input_event {
+			struct timeval time;	//输入事件触发的时间
+			__u16 type;				//输入事件的类型
+										type == EV_KEY  按键事件
+										type == EV_ABS  触摸屏事件
+										....
+			__u16 code;				//根据不同的type来看,
+									//比如type==EV_ABS下
+										code = ABS_X 表示触摸点的X轴状态变化
+										code = ABS_Y 表示触摸点的Y轴状态变化
+									//比如type==EV_KEY下
+										code = BTN_TOUCH 触摸屏触摸动作变化
+			__s32 value;			//指该输入事件的值,需要根据 code和type一起看
+		};
+
+
+			例如: 伪代码
+				if(type == EV_KEY && code==BTN_TOUCH)
+				{
+					if(value == 1)
+					{
+						//手指触摸了触摸屏
+					}
+					else if(value==0)
+					{
+						//手指从触摸屏离开
+					}
+				}
+
+
+	=========> 如何获取 ARM板的触摸屏事件
+		===> 从 /dev/input/event0 文件中读取 struct input_event结构体数据
+
+
+2.触摸屏输入事件获取的实现
+
+	/*
+		get_touch: 获取触摸屏输入事件
+	*/
+	int get_touch(void)
+	{
+		int fd = 0;
+		int ret;
+		struct input_event  ev;	//输入事件结构体变量,用来保存读取的输入事件
+	
+		//1) 打开触摸屏文件
+		fd = open("/dev/input/event0",O_RDWR);
+		if(-1 == fd)
+		{
+			perror("open input error");
+			return -1;
+		}
+		
+		//2) 读取触摸屏事件
+		while(1)
+		{
+			ret = read(fd,&ev,sizeof(ev)); //读取输入事件保存到结构体ev中
+			if(ret == sizeof(ev))
+			{
+				if(ev.type == EV_ABS && ev.code == ABS_X)
+				{
+					x = ev.value; //此时的value是触摸点X轴的坐标
+				}
+				else if(ev.type == EV_ABS && ev.code == ABS_Y)
+				{
+					y = ev.value; //此时的value是触摸点Y轴的坐标
+				}
+				else if(ev.type == EV_KEY && ev.code == BTN_TOUCH && ev.value==1)
+				{
+					//手指刚刚触碰 触摸屏
+					x_start = x;
+					y_start = y;
+					printf("turn down:(%d,%d)\n",x_start,y_start);
+				}
+				else if(ev.type == EV_KEY && ev.code == BTN_TOUCH && ev.value==0)
+				{
+					//手指从触摸屏 离开
+					x_stop = x;
+					y_stop = y;
+					printf("turn up  :(%d,%d)\n",x_stop,y_stop);
+
+					/* 伪代码
+					if(x_stop > 400) //如果点击在右侧
+					{
+						show_bmp(bmp[++count]);  //显示下一张图片
+						//char bmp[20][50]= {"1.bmp","2.bmp"};假设bmp数组记录所有的bmp图片名,count是当前显示图片的下标
+					}
+					else //否则
+					{
+						show_bmp(bmp[--count]); //显示上一张 
+					}
+					*/
+				}
+				
+
+			}
+		}
+
+		//3) 关闭文件
+		close(fd);
+	}
+
+
+====> 测试
+	int  main(void)
+	{
+		get_touch();
+	}
+	
+				

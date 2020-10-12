@@ -1,0 +1,25 @@
+#include<stdio.h>
+
+int main()
+{
+    float score;
+    while(scanf("%f",&score)!=EOF)
+    {
+        if(score<0||score>100)
+            printf("Score is error!\n");
+        else
+        {
+            if(score>=0&&score<60)
+                printf("E\n");
+            if(score>=60&&score<70)
+                printf("D\n");
+            if(score>=70&&score<80)
+                printf("C\n");
+            if(score>=80&&score<90)
+                printf("B\n");
+            if(score>=90&&score<=100)
+                printf("A\n");
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,27 @@
+/*hdu2024*/
+
+#include<stdio.h>
+#include<string.h>
+
+int main() {
+	int n,len,temp;//n个字符串,字符串的长度为len
+	char str[100];//字符串变量str
+	scanf("%d",&n);
+	getchar();//抵消空格,很重要!
+	while(n--) {
+		temp=0;
+		gets(str);
+		len=strlen(str);
+		if(str[0]>='0'&&str[0]<='9')printf("no\n");//如果str字符串的第一个元素是数字,不是合法标识符
+		else {
+			for(int i=0; i<len; i++) {
+				if((str[i]>='0'&&str[i]<='9')||(str[i]>='a'&&str[i]<='z')||(str[i]>='A'&&str[i]<='Z')||(str[i]=='_'))
+					temp++;
+			}
+			if(temp==len)printf("yes\n");
+				else printf("no\n");
+		}
+	}
+	return 0;
+}
+/*gets跟scanf的异同需要分清楚!*/

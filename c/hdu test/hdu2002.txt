@@ -1,0 +1,14 @@
+#include<stdio.h>
+#include<math.h>
+#define PI 3.1415927
+#define temp 4.0/3.0
+int main()
+{
+    float radius,volume;
+    while(scanf("%f",&radius)!=EOF)
+    {
+        volume=temp*PI*pow(radius,3);
+        printf("%.3f\n",volume);
+    }
+    return 0;
+}

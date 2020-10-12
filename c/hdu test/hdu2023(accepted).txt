@@ -1,0 +1,66 @@
+/*hdu2023*/
+#include<stdio.h>
+
+int main()
+{
+    int n,m,s[55][9],l,flag;/*s[55][9]为学生的成绩，
+    l是各科成绩均大于等于平均成绩的学生数量，n个学生，m门科目*/
+    double average1[55],average2[9];//每个学生的平均成绩，每门科目的平均成绩
+    while(scanf("%d%d",&n,&m)!=EOF&&n<=50&&m<=5)
+    {
+        int sum1=0,sum2=0;/*把每个学生的平均成绩总和跟每
+        门科目平均成绩总和初始化为0*/
+        l=0;
+        for(int i=0; i<n; i++)
+        {
+            for(int j=0; j<m; j++)
+            {
+                scanf("%d",&s[i][j]);//输入成绩
+            }
+        }
+        for(int i=0; i<n; i++)
+        {
+            for(int j=0; j<m; j++)
+            {
+                sum1+=s[i][j];//每个学生成绩之和
+            }
+            average1[i]=(double)sum1/m;//每个学生成绩的平均分
+            sum1=0;
+        }
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                sum2+=s[j][i];//每门科目成绩之和
+            }
+            average2[i]=(double)sum2/n;//每门科目平均分
+            sum2=0;
+        }
+        for(int i=0; i<n; i++)//要学会用反面跟flag
+        {
+            flag=0;
+            for(int j=0; j<m; j++)
+            {
+                if(s[i][j]<average2[j])
+                {
+                    flag=1;
+                    break;
+                }//如果有一科小于平均分则不满足
+            }
+            if(flag==0)
+                l++;
+        }
+        for(int i=0; i<n-1; i++)
+        {
+            printf("%.2lf ",average1[i]);
+        }
+        printf("%.2lf\n",average1[n-1]);
+        for(int i=0; i<m-1; i++)
+        {
+            printf("%.2lf ",average2[i]);
+        }
+        printf("%.2lf\n",average2[m-1]);
+        printf("%d\n\n",l);//按格式输出
+    }
+    return 0;
+}

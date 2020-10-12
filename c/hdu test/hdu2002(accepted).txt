@@ -1,0 +1,14 @@
+#include<stdio.h>
+#include<math.h>
+#define PI 3.1415927
+
+int main()
+{
+    double volume,radius;
+    while(scanf("%lf",&radius)!=EOF)
+    {
+        volume=4.0/3*PI*radius*radius*radius;
+        printf("%.3lf\n",volume);
+    }
+    return 0;
+}

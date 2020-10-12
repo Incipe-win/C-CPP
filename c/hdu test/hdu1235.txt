@@ -1,0 +1,23 @@
+#include<stdio.h>
+
+int main()
+{
+    int n;
+    while(~scanf("%d",&n))
+    {
+        if(n==0)
+            break;
+        int count=0;
+        double score[n],m;
+        for(int i=1; i<=n; i++)
+            scanf("%lf",&score[i]);
+        scanf("%lf",&m);
+        for(int i=1;i<=n;i++)
+        {
+             if(score[i]==m)
+               count++;
+        }
+        printf("%d\n",count);
+    }
+    return 0;
+}
