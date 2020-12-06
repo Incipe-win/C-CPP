@@ -10,7 +10,7 @@ src = $(wildcard $(source)/*.c)
 obj = $(patsubst %.c, %.o, $(src))
 
 app : $(obj)
-	$(cc) -o app -I $(include) $(obj)
+	$(cc) -o app $(obj)
 
 %.o : %.c
 	$(cc) -c $< -I $(include) -o $@ -std=c99 -Wall

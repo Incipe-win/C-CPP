@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     if (len == -1) {
       perror("read error");
     } else if (len == 0) {
-      printf("服务器关闭了连接");
+      printf("服务器关闭了连接\n");
       break;
     } else {
       printf("recv buf: %s\n", buf);

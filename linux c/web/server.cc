@@ -23,14 +23,14 @@ int main() {
     perror("bind error");
     exit(1);
   }
-  ret = listen(lfd, 20);
+  ret = listen(lfd, 128);
   if (ret == -1) {
     perror("listen error");
     exit(1);
   }
   struct sockaddr_in client;
   socklen_t len = sizeof(client);
-  int cfd = accept(lfd, (struct sockaddr *)&server, &len);
+  int cfd = accept(lfd, (struct sockaddr *)&client, &len);
   if (cfd == -1) {
     perror("accept error");
     exit(1);
@@ -42,20 +42,20 @@ int main() {
          ntohs(client.sin_port));
   while (1) {
     char buf[1024] = {0};
-    int len = read(cfd, buf, sizeof(buf));
-    if (len == -1) {
+    int n = read(cfd, buf, sizeof(buf));
+    if (n == -1) {
       perror("read error");
       exit(1);
-    } else if (len == 0) {
+    } else if (n == 0) {
       printf("客户端断开连接\n");
       break;
     } else {
       printf("recv buf: %s\n", buf);
-      for (int i = 0; i < len; ++i) {
+      for (int i = 0; i < n; ++i) {
         buf[i] = toupper(buf[i]);
       }
       printf("send buf: %s\n", buf);
-      write(cfd, buf, len);
+      write(cfd, buf, n);
     }
   }
   close(lfd);
