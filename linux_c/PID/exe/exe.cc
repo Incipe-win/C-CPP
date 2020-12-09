@@ -18,13 +18,13 @@ int main(int argc, char *argv[]) {
     perror("fork err");
     exit(1);
   }
-  char buf[256] = {0};
-  int ret = 1;
   if (pid == 0) {
     printf("I am child process, and i will write file, pid = %d, ppid = %d\n",
            getpid(), getppid());
     write(fd, argv[2], strlen(argv[2]));
   } else {
+    int ret = 1;
+    char buf[256] = {0};
     printf("I am parent process, and i will read file, pid = %d\n", getpid());
     while (ret) {
       ret = read(fd, buf, sizeof(buf));
