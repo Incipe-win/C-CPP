@@ -1,0 +1,14 @@
+/*hdu2035*/
+
+#include<stdio.h>
+
+int main(){
+	int a,b,c;
+	while(scanf("%d%d",&a,&b)!=EOF){
+		if(a==0&&b==0)break;
+		c=1;
+		while(b--)c=(c*a)%1000;//b个a相乘 取后三位！ 
+		printf("%d\n",c);
+	}
+	return 0;
+}

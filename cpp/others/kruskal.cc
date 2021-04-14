@@ -13,7 +13,7 @@ int a[N][M];
 struct node {
   int src, dst;
   int val;
-} n[N * M * 2];
+} node[N * M * 2];
 
 int findFather(int a) {
   while (a != father[a]) {

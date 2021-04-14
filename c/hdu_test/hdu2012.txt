@@ -1,0 +1,38 @@
+#include<stdio.h>
+int IsPrime(int k);
+
+int main()
+{
+    int x,y,k,temp;
+    while(scanf("%d%d",&x,&y)!=EOF&&x>=-39&&y>x&&y<=50)
+    {
+        temp=1;
+        if(x==0&&y==0)
+            break;
+        for(int i=x; i<=y; i++)
+        {
+            k=i*i+i+41;
+            if(!IsPrime(k))
+            {
+                temp=0;
+                break;
+            }
+        }
+        if(temp==1)
+            printf("OK\n");
+        else
+            printf("Sorry\n");
+    }
+    return 0;
+}
+
+int IsPrime(int k)
+{
+    int i;
+    for(i=2; i<=k/2; i++)
+    {
+        if(k%i==0)
+            return 0;
+    }
+    return 1;
+}

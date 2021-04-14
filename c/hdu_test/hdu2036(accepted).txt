@@ -1,0 +1,29 @@
+/*hdu2036*/
+
+#include<stdio.h>
+
+int main()
+{
+    int n;
+    double s;
+    while(scanf("%d",&n)!=EOF)
+    {
+        if(n==0)
+            break;
+        int x[n],y[n];
+        s=0;
+        for(int i=1; i<=n; i++)
+            scanf("%d%d",&x[i],&y[i]);
+        for(int i=1; i<n; i++)
+        {
+            s=s+(x[i]*y[i+1]-x[i+1]*y[i]);
+        }
+        s=s+(x[n]*y[1]-x[1]*y[n]);
+        s=(double)1/2*s;
+        printf("%.1f\n",s);
+    }
+    return 0;
+}
+/*????????????????????????¦Å??????
+(x1,y1),(x2,y2),(x3,y3)...(xn,yn)
+s=1/2*[(x1*y2-x2*y1)+(x2*y3-x3*y2)+...+(xk*yk+1-xk+1*yk)+...+(xn*y1-x1*yn)]*/

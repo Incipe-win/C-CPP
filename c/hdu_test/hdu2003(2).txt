@@ -1,0 +1,15 @@
+#include<stdio.h>
+
+int main()
+{
+    double a,variable;
+    while(scanf("%lf",&variable)!=EOF)
+    {
+        if(variable>=0)
+            a=variable;
+        else
+            a=-variable;
+        printf("%.2lf\n",a);
+    }
+    return 0;
+}

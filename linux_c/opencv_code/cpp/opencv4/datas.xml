@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<mat type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>u</dt>
+  <data>
+    1 0 0 0 1 0 0 0 1</data></mat>
+<x>100.</x>
+<str>"Learn Opencv 4"</str>
+<number_array>
+  4 5 6</number_array>
+<multi_nodes>
+  <month>8</month>
+  <day>28</day>
+  <year>2019</year>
+  <time>
+    0 1 2 3</time></multi_nodes>
+</opencv_storage>

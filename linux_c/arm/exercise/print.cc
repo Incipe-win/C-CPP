@@ -1,6 +1,9 @@
+#include <fcntl.h>
 #include <stdio.h>
-
-#include "exercise.h"
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 void print(unsigned char *buf) {
   printf("%x, %x, %x, %x\n", buf[2], buf[3], buf[4], buf[5]);
@@ -15,4 +18,21 @@ void print(unsigned char *buf) {
   printf(
       "file_size: %lu, file_width: %lu, file_height: %lu, colors_depth: %lu\n",
       file_size, file_width, file_height, colors_depth);
+}
+
+int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    printf("./a.out filename\n");
+    exit(-1);
+  }
+  int fd = 0;
+  fd = open(argv[1], O_RDONLY);
+  if (fd == -1) {
+    perror("file open error: ");
+    exit(-1);
+  }
+  unsigned char buf[32] = {0};
+  read(fd, buf, sizeof(buf));
+  print((unsigned char *)buf);
+  return 0;
 }
